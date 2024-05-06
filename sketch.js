@@ -1,19 +1,31 @@
 function createBoxes(n) {
-    let boxes = [];
+    const boxes = [];
+    const boxContainer = document.querySelector(".box-container");
+    const width = boxContainer.offsetWidth / n;
     for (let i = 0; i < n * n; ++i) {
-        let box = document.createElement("div");
+        const box = document.createElement("div");
         box.className = "box";
-        let hoverFunction = () => {
+        box.style.width = width + "px";
+        box.style.height = width + "px";
+        const hoverFunction = () => {
             box.classList.toggle("box-hover")
         }
         box.addEventListener("mouseenter", hoverFunction);
         box.addEventListener("mouseleave", hoverFunction);
         boxes[i] = box;
     }
-    let boxContainer = document.querySelector(".box-container");
     boxContainer.replaceChildren(...boxes);
 }
 
 (function () {
     createBoxes(16);
+    document.querySelector(".regenerate-button")
+        .addEventListener("click", () => {
+            const n = prompt("Input number of squares per side for the new grid (>=1 and <=100)");
+            if (n < 1 || n > 100) {
+                alert("Invalid input");
+            } else {
+                createBoxes(n);
+            }
+        })
 })();
