@@ -1,31 +1,41 @@
-function createBoxes(n) {
-    const boxes = [];
-    const boxContainer = document.querySelector(".box-container");
-    const width = boxContainer.offsetWidth / n;
+function createSquares(n) {
+    const squares = [];
+    const squareContainer = document.querySelector(".square-container");
+    const width = squareContainer.offsetWidth / n;
     for (let i = 0; i < n * n; ++i) {
-        const box = document.createElement("div");
-        box.className = "box";
-        box.style.width = width + "px";
-        box.style.height = width + "px";
+        const square = document.createElement("div");
+        square.className = "square";
+        square.style.width = width + "px";
+        square.style.height = width + "px";
         const hoverFunction = () => {
-            box.classList.toggle("box-hover")
+            square.style.backgroundColor = "black";
         }
-        box.addEventListener("mouseenter", hoverFunction);
-        box.addEventListener("mouseleave", hoverFunction);
-        boxes[i] = box;
+        square.addEventListener("mouseenter", hoverFunction);
+        squares[i] = square;
     }
-    boxContainer.replaceChildren(...boxes);
+    squareContainer.replaceChildren(...squares);
+}
+
+function reset() {
+    const squareContainer = document.querySelector(".square-container");
+    for (const square of squareContainer.children) {
+        square.style.backgroundColor = null;
+    }
 }
 
 (function () {
-    createBoxes(16);
+    createSquares(16);
+    document.querySelector(".reset-button")
+        .addEventListener("click", () => {
+            reset();
+        })
     document.querySelector(".regenerate-button")
         .addEventListener("click", () => {
             const n = prompt("Input number of squares per side for the new grid (>=1 and <=100)");
             if (n < 1 || n > 100) {
                 alert("Invalid input");
             } else {
-                createBoxes(n);
+                createSquares(n);
             }
         })
 })();
