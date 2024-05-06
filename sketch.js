@@ -7,20 +7,41 @@ function createSquares(n) {
         square.className = "square";
         square.style.width = width + "px";
         square.style.height = width + "px";
-        const hoverFunction = () => {
-            square.style.backgroundColor = "black";
-        }
-        square.addEventListener("mouseenter", hoverFunction);
+        square.addEventListener("mouseenter", handleHover);
         squares[i] = square;
     }
     squareContainer.replaceChildren(...squares);
+}
+
+function handleHover(event) {
+    let mode = document.querySelector('input[name="mode"]:checked').value;
+    switch (mode) {
+        case "black":
+            event.target.style.backgroundColor = "black";
+            event.target.style.opacity = 1;
+            break;
+        case "color":
+            event.target.style.backgroundColor = getRandomColor();
+            break;
+        case "grey":
+            let opacity = parseFloat(event.target.style.opacity) || 0;
+            opacity += 0.1;
+            event.target.style.backgroundColor = "black";
+            event.target.style.opacity = opacity;
+            break;
+    }
 }
 
 function reset() {
     const squareContainer = document.querySelector(".square-container");
     for (const square of squareContainer.children) {
         square.style.backgroundColor = null;
+        square.style.opacity = null;
     }
+}
+
+function getRandomColor() {
+    return "#" + Math.floor(Math.random() * 0xffffff).toString(16);
 }
 
 (function () {
@@ -38,4 +59,11 @@ function reset() {
                 createSquares(n);
             }
         })
+    document.querySelectorAll('input[name="mode"]')
+        .forEach(input => {
+            input.addEventListener("change", () => {
+                console.log("mode changed: " + input.value);
+                reset();
+            })
+        });
 })();

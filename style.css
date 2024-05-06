@@ -1,14 +1,21 @@
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 24px;
-    padding: 8px;
+    gap: 36px;
+    margin: 8px;
 }
 
 button {
     margin: 0 0;
     border-radius: 4px;
     font-size: 16px;
+}
+
+.modes {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    margin: 8px;
 }
 
 .square-container {
